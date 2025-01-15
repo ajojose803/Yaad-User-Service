@@ -1,0 +1,31 @@
+syntax = "proto3";
+package user_package;
+
+service User{
+    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+    rpc VerifyOtp(VerifyOtpRequest) returns (verifyOtpResponse) {}
+    rpc ResendOtp(ResendOtpRequest) returns (ResendOtpResponse) {}
+    rpc GoogleLoginUser(GoogleLoginUserRequest) returns (GoogleLoginUserResponse);
+    rpc VerifyUser(VerifyUserRequest) returns (VerifyUserResponse){}
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+    rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse) {}
+    rpc ChangePassword(ChangePasswordRequest) returns (SignupOtpResponse);
+    rpc addWalletBalance(addWalletBalanceRequest) returns (addWalletBalanceResponse) {}
+    rpc ProfileUpdate(ProfileUpdateRequest) returns (ProfileUpdateResponse) {}
+    rpc razorpayPayment(razorpayPaymentRequest) returns (razorpayPaymentResponse) {}
+}
+
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string mobile = 3;
+    string password = 4;
+    string otp = 5;
+    string token =6;
+    
+}
+
+message RegisterResponse {
+    string message = 1;
+}
