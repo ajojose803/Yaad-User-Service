@@ -1,4 +1,4 @@
-import RegisterUseCase from "../useCases/UserRegistrationUseCase";
+import RegisterUseCase from "../useCases/userRegistrationUseCase";
 
 const registerUseCase = new RegisterUseCase();
 
@@ -46,6 +46,7 @@ export default class RegisterController {
       callback(null, {error: (error as Error).message})
     }
   };
+  
   resendOtp = async( 
     call:{request: {name:string; email:string}},
     callback: (error:any, response:any) => void

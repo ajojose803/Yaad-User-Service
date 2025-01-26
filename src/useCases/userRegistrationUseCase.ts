@@ -2,7 +2,7 @@ import auth from "../middleware/auth";
 import UserRepository from "../repositories/userRepo";
 import brcypt from "../services/brcypt";
 import { getOtpByEmail } from "../services/redisClient";
-import { UserInterface } from "../utilities/interface";
+import { IUser } from "../utilities/interface";
 import { sendOtp } from "../utilities/sendOtp";
 
 const userRepository = new UserRepository();
@@ -10,7 +10,7 @@ const userRepository = new UserRepository();
 export default class RegisterUseCase {
   signupOtp = async (name: string, email: string) => {
     try {
-      const user = (await userRepository.findByEmail(email)) as UserInterface;
+      const user = (await userRepository.findByEmail(email)) as IUser;
       if (user) {
         return { message: "UserExist" };
       }
@@ -48,7 +48,7 @@ export default class RegisterUseCase {
 
       const existingUser = (await userRepository.findByEmail(
         email
-      )) as UserInterface;
+      )) as IUser;
       if (existingUser) {
         return { message: "UserExist" };
       }
@@ -64,7 +64,7 @@ export default class RegisterUseCase {
       if ((response.message = `UserCreated`)) {
         const newUser = (await userRepository.findByEmail(
           email
-        )) as UserInterface;
+        )) as IUser;
         const token = await auth.createToken(
           newUser._id.toString(),
           "user",

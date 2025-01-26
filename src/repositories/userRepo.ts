@@ -1,8 +1,8 @@
 import User from "../entities/user";
-import { RegisterUser, UserInterface } from "../utilities/interface";
+import { RegisterUser, IUser } from "../utilities/interface";
 
 export default class UserRepository {
-  findByEmail = async (email: string): Promise<UserInterface | null> => {
+  findByEmail = async (email: string): Promise<IUser | null> => {
     try {
       const userData = await User.findOne({ email });
       return userData;

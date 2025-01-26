@@ -20,7 +20,7 @@ const packageDef = protoLoader.loadSync(PROTO_PATH, {
 });
 
 const grpcObject = grpc.loadPackageDefinition(packageDef) as any;
-
+// console.log("Loaded gRPC Object:", grpcObject);
 if (
   !grpcObject.user ||
   !grpcObject.user.User ||
@@ -43,7 +43,7 @@ const Domain =
   process.env.NODE_ENV === "dev"
     ? process.env.DEV_DOMAIN
     : process.env.PRO_DOMAIN_USER;
-console.log(Domain);
+// console.log(Domain);
 
 server.bindAsync(
   `${Domain}:${SERVER_ADDRESS}`,
