@@ -16,6 +16,9 @@ export default class RegisterController {
     },
     callback: (error: any, response: any) => void
   ) => {
+    console.log("Incoming gRPC Request to RegisterUser:");
+    console.log("Request Data:", call.request);
+    
     const { name, email, password, phone, userImage, otp } = call.request;
     try {
       const response = await registerUseCase.registerUser(
