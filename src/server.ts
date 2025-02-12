@@ -5,8 +5,10 @@ import "dotenv/config";
 import connectDB from "./config/mongo";
 
 import RegisterController from "./controllers/registerController";
+import LoginController from "./controllers/loginController";
 
 const registerController = new RegisterController();
+const loginController = new LoginController();
 
 connectDB();
 
@@ -36,6 +38,7 @@ server.addService(grpcObject.user.User.service, {
     SignupOtp:registerController.signupOtp,
     ResendOtp: registerController.resendOtp,
     RegisterUser: registerController.registerUser,
+    LoginUser: loginController.loginUser,
 })
 
 const SERVER_ADDRESS = process.env.GRPC_SERVER_PORT || "50001";

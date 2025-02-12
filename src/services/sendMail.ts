@@ -1,10 +1,8 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config;
 
-export const sendMail = async (
-  email: string,
-  subject: string,
-  text: string
-) => {
+export const sendMail = async ( email: string, subject: string, text: string) => {
   try {
     const transaction = nodemailer.createTransport({
       service: "gmail",

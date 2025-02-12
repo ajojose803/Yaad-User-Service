@@ -4,6 +4,8 @@ import brcypt from "../services/brcypt";
 import { getOtpByEmail } from "../services/redisClient";
 import { IUser } from "../utilities/interface";
 import { sendOtp } from "../utilities/sendOtp";
+import crypto from "crypto"; 
+import { Metadata, ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js";
 
 const userRepository = new UserRepository();
 
@@ -12,7 +14,8 @@ export default class RegisterUseCase {
     try {
       const user = (await userRepository.findByEmail(email)) as IUser;
       if (user) {
-        return { message: "UserExist" };
+        // console.log("User already exists");
+        return { message: "User already exists" };
       }
       const response = await sendOtp({ email, name });
       return { message: response };
@@ -40,17 +43,17 @@ export default class RegisterUseCase {
   ) => {
     try {
       const storedOtp = await getOtpByEmail(email);
-      if (storedOtp === null || storedOtp.toString() !== otp.toString()) {
+      if (storedOtp === null || !crypto.timingSafeEqual(Buffer.from(storedOtp), Buffer.from(otp))) {
         console.log(`Otp does not match  or is not found`);
         return { message: `Otp does not match  or is not found` };
       }
-      console.log("Received Mobile Number:", phone);
+      // console.log("Received Mobile Number:", phone);
 
       const existingUser = (await userRepository.findByEmail(
         email
       )) as IUser;
       if (existingUser) {
-        return { message: "UserExist" };
+        return { message: "User with the same email already exists" };
       }
       const hashedPassword = await brcypt.securePassword(password);
       const newUserData = {
@@ -60,29 +63,32 @@ export default class RegisterUseCase {
         password: hashedPassword,
         userImage,
       };
+      
       const response = await userRepository.saveUser(newUserData);
-      if ((response.message = `UserCreated`)) {
-        const newUser = (await userRepository.findByEmail(
-          email
-        )) as IUser;
+      console.log(" Response message in RegisterUsecase",response.message)
+      if ((response.message === `UserCreated`)) {
+        const newUser = (await userRepository.findByEmail(email)) as IUser;
+        //console.log("New User:", newUser);
         const token = await auth.createToken(
           newUser._id.toString(),
-          "user",
+          "USER",
           "15m"
         );
+
         const refreshToken = await auth.createToken(
           newUser._id.toString(),
-          "user",
+          "USER",
           "7d"
         );
         return {
-          message: `Success`,
-          name: newUser.name,
-          token,
           _id: newUser._id,
-          refreshToken,
+          name: newUser.name,
+          email: newUser.email,
+          phone: newUser.phone,
           image: newUser.userImage,
-          email: newUser.phone,
+          token,
+          refreshToken,
+          message:`Success`,
         };
       } else {
         console.error(`Error saving user:`, response);

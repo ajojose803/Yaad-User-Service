@@ -22,10 +22,15 @@ const UserSchema: Schema = new Schema(
     userImage: {
       type: String,
     },
-    acoountStatus: {
+    accountStatus: {
       type: String,
       default: "Active",
     },
+    role: {
+      type: String,
+      default: "USER",
+    },
+    
   },
   {
     timestamps: true,

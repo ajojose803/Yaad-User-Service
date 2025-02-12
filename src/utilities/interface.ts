@@ -1,15 +1,15 @@
 import { Document, ObjectId } from 'mongoose';
 
 export interface AuthResponse {
-  message: string;
+  _id: string;
   name: string;
   email: string;
-  refreshToken: string;
-  token: string;
-  _id: string;
-  service: string;
-  userImage: string;
   phone: string;
+  userImage: string;
+  token: string;
+  refreshToken: string;
+  service: string;
+  message: string;
 }
 export interface RegisterUser {
   name: string;
@@ -25,11 +25,12 @@ export interface AdminAuthResponse {
   token: string;
 }
 
-export interface UpdateUser {
-  message: string;
-  name: string;
-  phone: string;
-  userImage: string;
+export interface UpdateUserRequest {
+  id: string;
+  name?: string;
+  mobile?: number;
+  userImage?: File | null;
+  password?: string | null;
 }
 
 export interface Tokens {
@@ -55,6 +56,7 @@ export interface IUser {
   eventsAttended?: string[]; // Array of IDs of events attended by the user
   createdAt?: Date;
   updatedAt?: Date;
+  role: string;
 }
 
 export interface CustomUser {

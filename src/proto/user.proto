@@ -2,8 +2,8 @@ syntax = "proto3";
 package user;
 
 service User {
-    rpc Register(RegisterRequest) returns (RegisterResponse);
-    rpc VerifyOtp(VerifyOtpRequest) returns (VerifyOtpResponse);
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+    rpc SignupOtp(SignupOtpRequest) returns (SignupOtpResponse);
     rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
     rpc ResendOtp(ResendOtpRequest) returns (ResendOtpResponse);
     rpc GoogleLoginUser(GoogleLoginUserRequest) returns (GoogleLoginUserResponse);
@@ -16,28 +16,33 @@ service User {
 }
 
 
-message RegisterRequest {
+message RegisterUserRequest {
     string name = 1;
     string email = 2;
-    string mobile = 3;
+    string phone = 3;
     string password = 4;
-    string otp = 5;
-    string token = 6;
+    string userImage= 5;
+    string otp = 6;
 }
 
-message RegisterResponse {
-    string message = 1;
-    bool success = 2;
+message RegisterUserResponse {
+     string message = 1;
+    string name = 2;
+    string token = 3;
+    string _id = 4;
+    string refreshToken = 5;
+    string image = 6;
+    string email = 7;
+    string pbone = 8;
 }
 
-message VerifyOtpRequest {
+message SignupOtpRequest {
     string email = 1;
-    string otp = 2;
+    string name = 2;
 }
 
-message VerifyOtpResponse {
+message SignupOtpResponse {
     string message = 1;
-    bool success = 2;
 }
 
 message ResendOtpRequest {
@@ -55,8 +60,13 @@ message LoginUserRequest {
 
 message LoginUserResponse {
     string message = 1;
-    string token = 2;
-    string refresh_token = 3;
+    string _id = 2;
+    string name = 3;
+    string accessToken = 4;
+    string refreshToken = 5;
+    string image = 6;
+    string email = 7;
+    string phone = 8;
 }
 
 message GoogleLoginUserRequest {
