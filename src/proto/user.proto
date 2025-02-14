@@ -2,12 +2,14 @@ syntax = "proto3";
 package user;
 
 service User {
-    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
     rpc SignupOtp(SignupOtpRequest) returns (SignupOtpResponse);
-    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
     rpc ResendOtp(ResendOtpRequest) returns (ResendOtpResponse);
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse);
+    rpc LoginUser(LoginUserRequest) returns (LoginUserResponse);
+    rpc LoginAdmin(LoginUserRequest) returns (LoginAdminResponse);
     rpc GoogleLoginUser(GoogleLoginUserRequest) returns (GoogleLoginUserResponse);
     rpc VerifyUser(VerifyUserRequest) returns (VerifyUserResponse);
+    rpc GetUsers(Empty) returns (GetUsersResponse);
     rpc GetUser(GetUserRequest) returns (GetUserResponse);
     rpc UpdateUserProfile(UpdateUserProfileRequest) returns (UpdateUserProfileResponse);
     rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
@@ -15,10 +17,10 @@ service User {
     rpc RazorpayPayment(RazorpayPaymentRequest) returns (RazorpayPaymentResponse);
 }
 
-
+message Empty {}
 message RegisterUserRequest {
     string name = 1;
-    string email = 2;
+    string email = 2;   
     string phone = 3;
     string password = 4;
     string userImage= 5;
@@ -35,7 +37,19 @@ message RegisterUserResponse {
     string email = 7;
     string pbone = 8;
 }
-
+message GetUsersResponse {
+    repeated UserMessage users = 1;
+}
+message UserMessage {
+    string _id = 1;                 
+    string name = 2;                
+    string email = 3;               
+    int64  mobile = 4;                       
+    string userImage = 5;         
+    string accountStatus = 6;      
+    string createdAt = 7;        
+    string updatedAt = 8;  
+} 
 message SignupOtpRequest {
     string email = 1;
     string name = 2;
@@ -68,6 +82,12 @@ message LoginUserResponse {
     string email = 7;
     string phone = 8;
 }
+message LoginAdminResponse {
+   string message = 1;
+    string name = 2;
+    string token = 3;
+}
+
 
 message GoogleLoginUserRequest {
     string google_token = 1;
