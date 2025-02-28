@@ -12,7 +12,7 @@ const connectDB = async (): Promise<void> => {
       throw new Error('MONGO_URL is not defined in environment variables.');
     }
 
-    await mongoose.connect(`${MONGO_URL}/Yaad-User`);
+    await mongoose.connect(`${MONGO_URL}/Yaad-Event`);
 
     console.log('Database connected successfully');
   } catch (error) {

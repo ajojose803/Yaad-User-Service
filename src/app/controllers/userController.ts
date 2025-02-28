@@ -1,5 +1,5 @@
-import UserUseCase from "../useCases/userUseCase";
-import { UpdateUserRequest } from "../utilities/interface";
+import UserUseCase from "../../core/useCases/userUseCase";
+import { UpdateUserRequest } from "../../utilities/interface";
 
 
 const userUseCase = new UserUseCase()

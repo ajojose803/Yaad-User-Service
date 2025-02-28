@@ -1,7 +1,8 @@
-import User from '../entities/user';
-import { RegisterUser, UpdateUserRequest, IUser } from '../utilities/interface';
+import User from '../../core/domain/entities/user';
+import { RegisterUser, UpdateUserRequest, IUser } from '../../utilities/interface';
+import { IUserRepository } from '../../core/domain/interfaces/IUserRepository';
 
-export default class UserRepository {
+export default class UserRepository implements IUserRepository{
   findByEmail = async (email: string): Promise<IUser | null> => {
     try {
       const userData = await User.findOne({ email });

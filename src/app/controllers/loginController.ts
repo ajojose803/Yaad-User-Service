@@ -1,4 +1,4 @@
-import LoginUseCase from '../useCases/loginUseCase';
+import LoginUseCase from '../../core/useCases/loginUseCase';
 
 const loginUseCase = new LoginUseCase();
 

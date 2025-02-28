@@ -1,6 +1,6 @@
-import { otpSetData } from "../services/redisClient";
-import generateOtp from "../services/generateOTP";
-import { sendMail } from "../services/sendMail";
+import { otpSetData } from "../infrastructure/services/redisClient";
+import generateOtp from "../infrastructure/services/generateOTP";
+import { sendMail } from "../infrastructure/services/sendMail";
 
 interface SendOtpParams {
     email:string,

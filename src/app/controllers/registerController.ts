@@ -1,9 +1,12 @@
-import RegisterUseCase from "../useCases/userRegistrationUseCase";
-import { ServerUnaryCall, sendUnaryData, Metadata } from "@grpc/grpc-js";
+import RegisterUseCase from "../../core/useCases/userRegistrationUseCase";
+import { inject, injectable } from "inversify";
+import TYPES from "../../types";
 
-const registerUseCase = new RegisterUseCase();
 
+@injectable()
 export default class RegisterController {
+  constructor(@inject(TYPES.RegisterUseCase) private registerUseCase: RegisterUseCase) {}
+
   registerUser = async (
     call: {
       request: {
@@ -19,7 +22,7 @@ export default class RegisterController {
   ) => {
     const { name, email, password, phone, userImage, otp } = call.request;
     try {
-      const response = await registerUseCase.registerUser(
+      const response = await this.registerUseCase.registerUser(
         name,
         email,
         password,
@@ -42,7 +45,7 @@ export default class RegisterController {
     console.log("Request Data:", call.request);
     const { name, email } = call.request;
     try {
-      const response = await registerUseCase.signupOtp(name, email);
+      const response = await this.registerUseCase.signupOtp(name, email);
       callback(null, response);
     } catch (error) {
       console.error("Otp sending failed:", error);
@@ -58,7 +61,7 @@ export default class RegisterController {
     const { name, email } = call.request;
     try {
       console.log(`Resending otp for:`, { name, email });
-      const response = await registerUseCase.resendOtp(name, email);
+      const response = await this.registerUseCase.resendOtp(name, email);
       console.log("otp response", response);
       callback(null, response);
     } catch (error) {

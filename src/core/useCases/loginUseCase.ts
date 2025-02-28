@@ -1,10 +1,10 @@
-import auth from '../middleware/auth';
-import UserRepository from '../repositories/userRepo';
-import bcrypt from '../services/brcypt';
-import { getOtpByEmail } from '../services/redisClient';
-import { IUser, UpdateUserRequest, } from '../utilities/interface';
-import { comparePassword } from '../utilities/passwordCompare';
-import { sendOtp } from '../utilities/sendOtp';
+import AuthService  from '../../app/middleware/AuthService'; '../../app/middleware/AuthService';
+import UserRepository from '../../data/repositories/UserRepository';
+import bcrypt from '../../infrastructure/services/brcypt';
+import { getOtpByEmail } from '../../infrastructure/services/redisClient';
+import { IUser, UpdateUserRequest, } from '../../utilities/interface';
+import { comparePassword } from '../../utilities/passwordCompare';
+import { sendOtp } from '../../utilities/sendOtp';
 
 const userRepository = new UserRepository();
 
@@ -22,8 +22,8 @@ export default class LoginUseCase {
       if (user.accountStatus === 'Blocked') {
         return { message: 'blocked' };
       }
-      const accessToken = await auth.createToken(user._id.toString(),user.role, '15m');
-      const refreshToken = await auth.createToken(user._id.toString(),user.role,  '7d');
+      const accessToken = await AuthService.createToken(user._id.toString(),user.role, '15m');
+      const refreshToken = await AuthService.createToken(user._id.toString(),user.role,  '7d');
       console.log(`User in db: ${user}`);
       console.log(user._id,user.name,
         accessToken,
@@ -53,8 +53,8 @@ export default class LoginUseCase {
         return { message: 'blocked' };
       }
 
-      const accessToken = await auth.createToken(user._id.toString(),user.role,  '15m');
-      const refreshToken = await auth.createToken(user._id.toString(),user.role,  '7d');
+      const accessToken = await AuthService.createToken(user._id.toString(),user.role,  '15m');
+      const refreshToken = await AuthService.createToken(user._id.toString(),user.role,  '7d');
       return {
         message: 'Success',
         name: user.name,

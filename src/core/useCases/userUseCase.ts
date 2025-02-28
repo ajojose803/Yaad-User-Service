@@ -1,7 +1,7 @@
-import UserRepository from '../repositories/userRepo';
-import bcrypt from '../services/brcypt';
-import { UpdateUserRequest, IUser } from '../utilities/interface';
-import { comparePassword } from '../utilities/passwordCompare';
+import UserRepository from '../../data/repositories/UserRepository';
+import bcrypt from '../../infrastructure/services/brcypt';
+import { UpdateUserRequest, IUser } from '../../utilities/interface';
+import { comparePassword } from '../../utilities/passwordCompare';
 
 const userRepository = new UserRepository();
 
